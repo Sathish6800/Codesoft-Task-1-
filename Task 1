@@ -1,0 +1,56 @@
+import random
+
+def play_game():
+    lower_bound = 1
+    upper_bound = 100
+    max_attempts = 7
+    score = 0
+    round_number = 1
+
+    print("🎉 Welcome to the Number Guessing Game!")
+    print(f"Try to guess the number between {lower_bound} and {upper_bound}.")
+
+    while True:
+        print(f"\n🔁 Round {round_number}")
+        number_to_guess = random.randint(lower_bound, upper_bound)
+        attempts_left = max_attempts
+        guessed_correctly = False
+
+        while attempts_left > 0:
+            try:
+                guess = int(input(f"Enter your guess ({attempts_left} attempts left): "))
+            except ValueError:
+                print("⚠️ Invalid input. Please enter a number.")
+                continue
+
+            if guess < lower_bound or guess > upper_bound:
+                print(f"⚠️ Please guess a number within {lower_bound}-{upper_bound}.")
+                continue
+
+            if guess == number_to_guess:
+                print("✅ Correct! You guessed the number!")
+                guessed_correctly = True
+                score += 1
+                break
+            elif guess < number_to_guess:
+                print("🔼 Too low!")
+            else:
+                print("🔽 Too high!")
+
+            attempts_left -= 1
+
+        if not guessed_correctly:
+            print(f"❌ You're out of attempts! The number was {number_to_guess}.")
+
+        print(f"🎯 Your current score: {score} out of {round_number} rounds.")
+
+        play_again = input("Do you want to play another round? (yes/no): ").strip().lower()
+        if play_again not in ['yes', 'y']:
+            print("👋 Thanks for playing! Final score:", score)
+            break
+
+        round_number += 1
+
+# Run the game
+if __name__ == "__main__":
+    play_game()
